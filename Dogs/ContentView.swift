@@ -22,13 +22,16 @@ struct ContentView: View {
                 if let image = img.image {
                     image
                         .resizable()
-                        .frame(width: 201, height: 201)
+                        .frame(width: 501, height: 501)
+                        .cornerRadius(20)
                 }
             }
             
             Text("Our Dog?")
                 .bold()
                 .font(.largeTitle)
+            
+            
             
             Button {
                 Task {
@@ -39,11 +42,25 @@ struct ContentView: View {
                 }
             } label: {
                 Text("Feach New Dog!")
+                    .font(.title)
             }
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+        .task {
+            
+            
+                await fetchDog()
+                }
     }
+    
+    func fetchDog() async {
+            let ourData = await getSeverData()
+            if let message = ourData?.message {
+                dogoImage = URL(string: message)
+            }
+        }
 }
 
 func getSeverData() async -> SeverResponse? {
