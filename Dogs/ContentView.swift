@@ -9,13 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack{
+            AsyncImage(url: URL(string: "https://images.dog.ceo/breeds/poodle-miniature/n02113712_10525.jpg")){ img in
+                if let error = img.error{
+                    Text("We Have An Error")
+                    Text("\(error.localizedDescription)")
+                }
+                
+                if let image = img.image{
+                    image
+                        .resizable()
+                        .frame(width: 201, height: 201)
+                    
+                }
+            }
+            
+            Text("Our Dog?")
+                .bold()
+                .font(.largeTitle)
+            
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+
     }
 }
 
